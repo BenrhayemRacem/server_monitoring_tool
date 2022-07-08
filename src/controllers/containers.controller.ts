@@ -28,10 +28,34 @@ class ContainersController {
 
         }catch (e) {
             console.log(e)
-            return res.status(StatusCodes.BAD_REQUEST).json(e)
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(e)
 
         }
     }
+
+    async getOneContainerDetails(req:Request , res:Response) {
+
+        try {
+            const id = req.params.id ;
+            axiosInstance({
+                url : `/containers/${id}/json`
+            }).then(response=>{
+                return res.status(response.status).json(response.data)
+
+            }).catch(error=>{
+                return res.status(error.response.status).json(error.response.data)
+
+            })
+
+        }catch (e) {
+            console.log(e)
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(e)
+
+
+        }
+    }
+
+
 
 }
 

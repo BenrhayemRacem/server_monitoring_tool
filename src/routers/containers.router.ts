@@ -6,6 +6,7 @@ const router = express.Router()
 
 
 router.get("/" , containersController.listAllContainers)
+router.get("/:id" , containersController.getOneContainerDetails)
 
 
 export default router
