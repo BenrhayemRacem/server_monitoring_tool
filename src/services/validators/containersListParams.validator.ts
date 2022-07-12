@@ -1,29 +1,29 @@
-import { IsBoolean, IsInt, IsOptional, IsPositive, ValidateNested } from 'class-validator'
+import {
+    IsBoolean,
+    IsInt,
+    IsOptional,
+    IsPositive,
+    ValidateNested,
+} from 'class-validator'
 import { ContainersListFiltersValidator } from './containersListFilters.validator'
-import { Type } from 'class-transformer';
-
+import { Type } from 'class-transformer'
 
 export class ContainersListParamsValidator {
-
     @IsBoolean()
     @IsOptional()
-    all : boolean = false;
+    all: boolean = false
 
     @IsInt()
     @IsPositive()
     @IsOptional()
-    limit : number|undefined ;
+    limit: number | undefined
 
     @IsBoolean()
     @IsOptional()
-    size: boolean=false ;
+    size: boolean = false
 
     @IsOptional()
-    @ValidateNested({each:true})
-    @Type(()=>ContainersListFiltersValidator)
+    @ValidateNested({ each: true })
+    @Type(() => ContainersListFiltersValidator)
     filters: ContainersListFiltersValidator | undefined
-
-
 }
-
-

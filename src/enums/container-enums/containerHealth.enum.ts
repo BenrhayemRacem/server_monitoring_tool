@@ -1,11 +1,6 @@
-
-
-
 export enum ContainerHealthEnum {
-    HEALTHY='healthy' ,
+    HEALTHY = 'healthy',
     STARTING = 'starting',
-    UNHEALTHY= 'unhealthy',
-    NONE = 'none'
-
-
+    UNHEALTHY = 'unhealthy',
+    NONE = 'none',
 }
