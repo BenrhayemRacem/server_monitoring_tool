@@ -3,6 +3,7 @@ import 'reflect-metadata'
 import 'es6-shim'
 import statsRoute from './routers/stats.router'
 import containersRoute from './routers/containers.router'
+import imagesRoute from './routers/images.router'
 
 import dotenv from 'dotenv'
 
@@ -14,6 +15,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use('/', statsRoute)
 app.use('/containers', containersRoute)
+app.use('/images', imagesRoute)
 
 app.listen(process.env.PORT, () => {
     console.log('Server started on port: ' + process.env.PORT)
