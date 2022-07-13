@@ -2,6 +2,8 @@
 import {Request,Response} from 'express'
 import axiosInstance from '../config/axios.config'
 import { StatusCodes } from 'http-status-codes'
+import { validateBodyAndParse } from '../utils/validateAndParse'
+import { ImageBuildParamsValidator } from '../services/validators/imageBuildParams.validator'
 
 class ImagesController {
 
@@ -101,6 +103,27 @@ class ImagesController {
             }).then(response => res.status(response.status).json(response.data))
                 .catch(err => res.status(err.response.status).json(err.response.data))
 
+        }catch (e) {
+            console.log(e)
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(e)
+        }
+    }
+
+    async buildImage(req:Request,res:Response) {
+        try {
+
+            const [params, error] =await validateBodyAndParse<ImageBuildParamsValidator>(
+                req.body,
+                ImageBuildParamsValidator
+            )
+            if (!params)
+                return res.status(StatusCodes.BAD_REQUEST).json({ error })
+            axiosInstance({
+                method : 'POST',
+                url : '/build',
+                params,
+            }).then(response => res.status(response.status).json(response.data))
+                .catch(err => res.status(err.response.status).json(err.response.data))
         }catch (e) {
             console.log(e)
             return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(e)
