@@ -3,6 +3,7 @@ import axiosInstance from '../config/axios.config'
 import { StatusCodes } from 'http-status-codes'
 import { validateBodyAndParse } from '../utils/validateAndParse'
 import { ContainersListParamsValidator } from '../services/validators/containersListParams.validator'
+import { ContainerCreateBodyValidator } from '../services/validators/containerCreateBody.validator'
 
 class ContainersController {
     async listAllContainers(req: Request, res: Response) {
@@ -247,6 +248,24 @@ class ContainersController {
                         .json(error.response.data)
                 })
         } catch (e) {
+            console.log(e)
+            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(e)
+        }
+    }
+
+    async createContainer (req:Request,res:Response) {
+        try{
+            const url = req.query.name  ? `/containers/create?name=${req.query.name}` :`/containers/create` ;
+            const [data,error] = await validateBodyAndParse<ContainerCreateBodyValidator>(req.body,ContainerCreateBodyValidator);
+            if(!data) return res.status(StatusCodes.BAD_REQUEST).json({error})
+            axiosInstance({
+                method : 'POST',
+                url,
+                data
+            }).then(response => res.status(response.status).json(response.data))
+                .catch(err=>err.status(err.response.status).json(err.response.data))
+
+        }catch (e) {
             console.log(e)
             return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(e)
         }

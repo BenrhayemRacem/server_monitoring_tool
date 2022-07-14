@@ -1,7 +1,7 @@
 import { validate, ValidationError } from 'class-validator'
 import {
     ClassConstructor,
-    plainToClass,
+
     plainToInstance,
 } from 'class-transformer'
 
