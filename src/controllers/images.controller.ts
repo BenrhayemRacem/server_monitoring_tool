@@ -14,7 +14,7 @@ class ImagesController {
                 method: 'GET',
                 url: `/images/json?all=${all}`
             }).then(response => res.status(StatusCodes.OK).json(response.data))
-                .catch(err => res.status(err.response.status).json(err.response.data))
+                //.catch(err => res.status(err.response.status).json(err.response.data))
 
         } catch (e) {
             console.log(e)

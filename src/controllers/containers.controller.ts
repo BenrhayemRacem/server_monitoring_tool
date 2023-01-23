@@ -263,7 +263,7 @@ class ContainersController {
                 url,
                 data
             }).then(response => res.status(response.status).json(response.data))
-                .catch(err=>err.status(err.response.status).json(err.response.data))
+                .catch(err=>res.status(err.response.status).json(err.response.data))
 
         }catch (e) {
             console.log(e)
